@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: linkforge-postgres
+
+    environment:
+      POSTGRES_USER: linkforge
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: linkforge
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U linkforge -d linkforge" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+  adminer:
+    image: adminer
+    ports:
+      - "127.0.0.1:8081:8080"
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:

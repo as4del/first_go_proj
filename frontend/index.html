@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5ef">
+  <title>LinkForge — ваши ссылки, короче</title>
+  <link rel="stylesheet" href="/app/styles.css">
+  <script src="/app/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-icon">↗</span> LinkForge<span class="brand-dot">.</span></a>
+      <span class="eyebrow nav-label">РАБОЧЕЕ ПРОСТРАНСТВО</span>
+      <nav aria-label="Основная навигация">
+        <a class="nav-link active" href="#workspace"><span>⌘</span> Мои ссылки <span id="nav-count" class="count">—</span></a>
+        <a class="nav-link" href="#create"><span>＋</span> Создать ссылку</a>
+        <a class="nav-link" href="#account"><span>◎</span> Аккаунт</a>
+      </nav>
+      <div class="sidebar-note"><span class="mini-mark">↗</span><strong>Меньше символов.<br>Больше смысла.</strong><p>Соберите важные адреса в одном месте.</p></div>
+      <div class="sidebar-bottom"><span class="status-dot"></span> LinkForge <span>LOCAL / 01</span></div>
+    </aside>
+
+    <main id="workspace">
+      <header class="topbar"><span>Личное пространство <span class="slash">/</span> Обзор</span><div class="user-chip"><span id="avatar" class="avatar">?</span><span id="header-user">Гость</span></div></header>
+      <section class="page-heading"><div><p class="eyebrow">МАЛЕНЬКИЕ ССЫЛКИ, БОЛЬШИЕ ВОЗМОЖНОСТИ</p><h1>Длинная история.<br><span>Короткая ссылка.</span></h1><p class="lead">Создавайте понятные адреса и держите их под рукой.</p></div><div class="hero-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="hero-arrow">↗</span><span class="art-caption">MAKE IT SHORT.</span></div></section>
+
+      <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+      <section class="overview" aria-label="Обзор аккаунта"><div><span class="metric-label">Всего ссылок</span><strong id="total">—</strong><span class="metric-note">В вашем аккаунте</span></div><div><span class="metric-label">Сессия</span><strong id="session-label" class="metric-text">Проверяем…</strong><span id="session-note" class="metric-note">Проверка через /api/me</span></div><div class="overview-action"><span class="metric-label">Всё готово к работе?</span><button id="check-session" class="text-button" type="button">Проверить сессию <span>↻</span></button><span class="metric-note">Авторизация через cookie</span></div></section>
+
+      <div class="work-grid">
+        <section class="card create-card" id="create"><div class="section-title"><span class="section-number">01</span><h2>Создать ссылку</h2><span class="small-tag">НОВАЯ</span></div><p class="section-description">Вставьте адрес и придумайте короткий код.</p>
+          <form id="link-form"><label for="original">Оригинальная ссылка</label><input id="original" name="original" type="url" placeholder="https://example.com/очень-длинный-адрес" required autocomplete="url"><label for="short">Короткий код</label><div class="input-prefix"><span>/get/</span><input id="short" name="short" placeholder="my-link" required pattern="[A-Za-z0-9_-]+" title="Латинские буквы, цифры, дефис и подчёркивание" autocomplete="off"></div><p class="field-hint">Латинские буквы, цифры, дефис и подчёркивание.</p><button id="create-button" class="button primary" type="submit" disabled>Создать короткую ссылку <span>↗</span></button><p id="create-hint" class="form-note">Войдите в аккаунт или зарегистрируйтесь.</p></form>
+          <div id="created-result" class="created-result" hidden><span class="eyebrow">ССЫЛКА ГОТОВА</span><a id="created-link" target="_blank" rel="noopener noreferrer"></a><button id="copy-created" class="text-button" type="button">Скопировать ↗</button></div>
+        </section>
+
+        <section class="card account-card" id="account"><div class="section-title"><span class="section-number">02</span><h2>Ваш аккаунт</h2><span id="account-badge" class="small-tag">COOKIE</span></div>
+          <div id="signed-in" hidden><div class="profile"><span id="profile-avatar" class="avatar large"></span><div><span class="eyebrow">ВЫ АВТОРИЗОВАНЫ</span><h3 id="profile-name"></h3></div></div><p class="section-description">Новые ссылки будут привязаны к вашему аккаунту. При следующем открытии страницы проверим сессию автоматически.</p><div class="session-card"><span class="status-dot"></span> Сессия подтверждена сервером</div><button id="logout-button" class="button secondary" type="button">Выйти из аккаунта <span>→</span></button></div>
+          <div id="signed-out">
+            <div class="auth-tabs" role="group" aria-label="Вход или регистрация">
+              <button id="login-tab" class="auth-tab selected" type="button" aria-pressed="true" aria-controls="login-form">Вход</button>
+              <button id="register-tab" class="auth-tab" type="button" aria-pressed="false" aria-controls="user-form">Регистрация</button>
+            </div>
+            <p id="auth-description" class="section-description">Войдите в свой аккаунт. Если кука уже есть, сессия восстановится автоматически.</p>
+            <form id="login-form">
+              <label for="login-username">Имя пользователя</label>
+              <input id="login-username" name="username" placeholder="alex" required autocomplete="username">
+              <label for="login-password">Пароль</label>
+              <input id="login-password" name="password" type="password" placeholder="Ваш пароль" required autocomplete="current-password">
+              <button class="button secondary" type="submit">Войти в аккаунт <span>→</span></button>
+              <p class="form-note">После входа ваши ссылки загрузятся автоматически.</p>
+            </form>
+            <form id="user-form" hidden><div class="form-row"><div><label for="username">Имя пользователя</label><input id="username" name="username" placeholder="alex" required autocomplete="username"></div><div><label for="email">Электронная почта</label><input id="email" name="email" type="email" placeholder="alex@example.com" required autocomplete="email"></div></div><label for="password">Пароль</label><input id="password" name="password" type="password" placeholder="Придумайте пароль" required autocomplete="new-password"><button class="button secondary" type="submit">Создать аккаунт <span>→</span></button><p class="form-note">После регистрации проверим сессию и откроем ваш аккаунт.</p></form></div>
+        </section>
+      </div>
+
+      <section class="card links-card"><div class="links-heading"><div class="section-title"><span class="section-number">03</span><h2>Мои ссылки</h2><span id="list-count" class="count">—</span></div><button id="refresh-links" class="text-button" type="button" disabled>Обновить ↻</button></div><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Найти по коду или адресу" aria-label="Поиск по ссылкам"></div><div id="list-state" class="empty-state"><span class="empty-icon">↗</span><h3>У каждой ссылки есть начало</h3><p>Авторизуйтесь, чтобы увидеть свои ссылки.</p></div><div class="table-scroll"><table id="links-table" hidden><thead><tr><th scope="col">КОРОТКАЯ ССЫЛКА</th><th scope="col">ОРИГИНАЛЬНЫЙ АДРЕС</th><th scope="col"><span class="sr-only">Действия</span></th></tr></thead><tbody id="links-body"></tbody></table></div></section>
+
+      <section class="resolve-panel"><div><span class="eyebrow">ПРОВЕРИТЬ ПЕРЕХОД</span><h2>Уже есть короткий код?</h2><p>Откройте ссылку в новой вкладке — сервер перенаправит на оригинал.</p></div><form id="resolve-form"><label class="sr-only" for="resolve-code">Короткий код</label><input id="resolve-code" placeholder="my-link" required pattern="[A-Za-z0-9_-]+"><button class="button dark" type="submit">Перейти ↗</button></form></section>
+      <footer><span>LinkForge<span class="brand-dot">.</span> <span class="footer-note">Ссылки в порядке.</span></span><span>Сделано для вашего Go backend <span class="status-dot"></span></span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
